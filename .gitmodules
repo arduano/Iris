@@ -1,0 +1,6 @@
+[submodule "MIDIModificationFramework"]
+	path = MIDIModificationFramework
+	url = https://github.com/arduano/MIDIModificationFramework.git
+[submodule "DX.WPF"]
+	path = DX.WPF
+	url = https://github.com/arduano/DX.WPF.git
