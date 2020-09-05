@@ -9,10 +9,30 @@
              d:DesignHeight="450" Width="381.337">
     <Grid>
         <Grid Name="containerGrid" PreviewMouseWheel="containerGrid_MouseWheel" Background="Transparent">
-            <Grid Name="viewContainer">
-                <dx11:DX11NoteView x:Name="preview" PreviewMouseWheel="containerGrid_MouseWheel" MouseWheel="containerGrid_MouseWheel"/>
-            </Grid>
-            <Canvas Name="detailContainer"></Canvas>
+            <DockPanel LastChildFill="True">
+                <Grid Width="20">
+                    <Grid Name="progressBars">
+
+                    </Grid>
+                </Grid>
+                <Grid Width="20" DockPanel.Dock="Right">
+                    <Grid Name="barNumbers">
+                        <TextBlock Width="100" Margin="0,-50,0,0" FontSize="20" TextAlignment="Center" VerticalAlignment="Top" >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </TextBlock.LayoutTransform>
+                            test
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+                <Grid>
+                    <Grid Name="viewContainer">
+                        <dx11:DX11NoteView x:Name="preview" PreviewMouseWheel="containerGrid_MouseWheel" MouseWheel="containerGrid_MouseWheel"/>
+                    </Grid>
+                    <Grid Name="lineContainer"></Grid>
+                    <Grid Name="textContainer"></Grid>
+                </Grid>
+            </DockPanel>
         </Grid>
     </Grid>
 </UserControl>

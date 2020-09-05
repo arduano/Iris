@@ -5,10 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Iris"
         xmlns:dx11="clr-namespace:Iris.Previews.DX11"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Name="mainWindow"
         Title="MainWindow" Height="450" Width="800"
         KeyUp="mainWindow_KeyUp">
     <Grid>
-        <local:PianoPreview x:Name="pianoPreview" Width="Auto" Height="Auto"/>
+        <DockPanel LastChildFill="True">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                <Button Name="openFolder">Open</Button>
+                <Button Name="createFolder" DockPanel.Dock="Right">Create</Button>
+                <TextBox Name="projectPath" Text="{Binding CurrentProjectPath, ElementName=mainWindow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <Grid Name="previewArea">
+                <local:PianoPreview x:Name="pianoPreview" Width="Auto" Height="Auto"/>
+                <Grid Name="previewOverlayError" Background="#CC330000">
+                    <TextBlock Margin="10" FontSize="14" Foreground="White" Text="{Binding CompilerError, ElementName=mainWindow}"/>
+                </Grid>
+                <Grid Name="previewOverlayCompiling" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#88000000">
+                    <TextBlock Foreground="White" FontSize="14" Margin="10">Compiling...</TextBlock>
+                </Grid>
+                <Grid Name="previewOverlayBuilding" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#88000000">
+                    <TextBlock Foreground="White" FontSize="14" Margin="10">Building...</TextBlock>
+                </Grid>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>

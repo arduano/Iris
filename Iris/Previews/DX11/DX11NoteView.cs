@@ -43,6 +43,8 @@ namespace Iris.Previews.DX11
         public double ViewLeft { get; set; }
         public double ViewRight { get; set; }
 
+        System.Windows.Thickness previousThickness = new System.Windows.Thickness();
+
         public DX11NoteView()
         {
             ResetNoteArrays();
@@ -187,6 +189,10 @@ namespace Iris.Previews.DX11
         double lastBottomCache = 0;
         bool resetStartCache = false;
 
+        public event EventHandler SourcingFinished;
+        public event EventHandler<ViewRenderedArgs> RenderedFrame;
+        public event EventHandler<Exception> SourcingErrored;
+
         void Render(DrawEventArgs args)
         {
             var device = Renderer.Device;
@@ -253,7 +259,7 @@ namespace Iris.Previews.DX11
                         {
                             for (; start < notes.Count; start++)
                             {
-                                if (notes[start].End > start) break;
+                                if (notes[start].End > bottom) break;
                             }
                             startNoteCache[k] = start;
                         }
@@ -267,10 +273,14 @@ namespace Iris.Previews.DX11
                             return;
                         }
                         
-                        for (int i = 0; i < notes.Count; i++)
+                        for (int i = start; i < notes.Count; i++)
                         {
                             var n = notes[i];
-                            if (n.End < bottom) continue;
+                            if (n.End < bottom)
+                            {
+                                startNoteCache[k] = start;
+                                continue;
+                            }
                             if (n.Start > top) break;
                             rn[pos++] = new RenderNote()
                             {
@@ -284,6 +294,11 @@ namespace Iris.Previews.DX11
                         flush();
                     }
                 });
+
+                var returnView = new System.Windows.Thickness(viewLeft, top, viewRight, bottom);
+                RenderedFrame?.Invoke(this, new ViewRenderedArgs(previousThickness));
+                previousThickness = returnView;
+
                 resetStartCache = false;
                 lastBottomCache = bottom;
             }
@@ -388,6 +403,8 @@ namespace Iris.Previews.DX11
 
                 reset();
 
+                try
+                {
                 foreach (var n in notes)
                 {
                     if (s.ElapsedMilliseconds > 1000 * 0.5)
@@ -401,7 +418,13 @@ namespace Iris.Previews.DX11
                     if (cancelNoteFiller) break;
                     cache[n.Key].Add(n);
                 }
+                }
+                catch(Exception e)
+                {
+                    SourcingErrored?.Invoke(this, e);
+                }
                 flush();
+                SourcingFinished?.Invoke(this, new EventArgs());
             });
         }
 

@@ -12,6 +12,11 @@ namespace Iris.Previews
         void SetNoteSource(IEnumerable<TrackNote> notes, int trackCount);
         void StopSourcing();
 
+        event EventHandler SourcingFinished;
+        event EventHandler<Exception> SourcingErrored;
+
+        event EventHandler<ViewRenderedArgs> RenderedFrame;
+
         double ViewTop { get; set; }
         double ViewBottom { get; set; }
         double ViewLeft { get; set; }

@@ -84,6 +84,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Audio\IAudioPreview.cs" />
+    <Compile Include="Audio\KDMAPI\KDMAPIAudio.cs" />
+    <Compile Include="Audio\KDMAPI\KDMAPI_Interface.cs" />
+    <Compile Include="Time.cs" />
+    <Compile Include="UI\BBinding.cs" />
+    <Compile Include="UI\InplaceConverter.cs" />
+    <Compile Include="ProjectFolder.cs" />
     <Compile Include="ScriptFunctions\MIDI.cs" />
     <Compile Include="VelocityEase.cs" />
     <Page Include="MainWindow.xaml">
@@ -94,13 +101,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ArrayPattern.cs" />
     <Compile Include="BasicExtensions.cs" />
-    <Compile Include="Compile.cs" />
     <Compile Include="DisposeGroup.cs" />
     <Compile Include="ScriptFunctions\IGenerator.cs" />
-    <Compile Include="IPattern.cs" />
-    <Compile Include="Lines.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -111,7 +114,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pattern.cs" />
     <Compile Include="PianoPreview.xaml.cs">
       <DependentUpon>PianoPreview.xaml</DependentUpon>
     </Compile>
